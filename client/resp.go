@@ -213,12 +213,18 @@ func (c *Conn) readOK() (*Result, error) {
 }
 
 func (c *Conn) readResult(binary bool) (*Result, error) {
+
+	fmt.Println("-----> in readResult")
 	firstPkgBuf, err := c.ReadPacketReuseMem(utils.ByteSliceGet(16)[:0])
 	defer utils.ByteSlicePut(firstPkgBuf)
 
 	if err != nil {
+		fmt.Println("-----> fail in readResult")
 		return nil, errors.Trace(err)
 	}
+
+
+	fmt.Println("-----> in readResult part 2")
 
 	if firstPkgBuf[0] == OK_HEADER {
 		return c.handleOKPacket(firstPkgBuf)
