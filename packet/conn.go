@@ -91,9 +91,11 @@ func (c *Conn) ReadPacket() ([]byte, error) {
 }
 
 func (c *Conn) ReadPacketReuseMem(dst []byte) ([]byte, error) {
+
+	fmt.Println("--> in ReadPacketReuseMem 1")
 	var buf bytes.Buffer
 
-	fmt.Println("--> in ReadPacketReuseMem")
+	fmt.Println("--> in ReadPacketReuseMem 2")
 
 	if err := c.ReadPacketTo(&buf); err != nil {
 		fmt.Println("--> error in ReadPacketReuseMem")
