@@ -5,6 +5,7 @@ import (
 	"bytes"
 	"io"
 	"net"
+	"fmt"
 	"sync"
 
 	"crypto/rand"
@@ -90,16 +91,12 @@ func (c *Conn) ReadPacket() ([]byte, error) {
 }
 
 func (c *Conn) ReadPacketReuseMem(dst []byte) ([]byte, error) {
-	// Here we use `sync.Pool` to avoid allocate/destroy buffers frequently.
-	//buf := utils.BytesBufferGet()
-	//defer utils.BytesBufferPut(buf)
 	var buf bytes.Buffer
 
 	if err := c.ReadPacketTo(&buf); err != nil {
+		fmt.Println("error in ReadPacketReuseMem")
 		return nil, errors.Trace(err)
 	} else {
-		//result := append(dst, buf.Bytes()...)
-		//return result, nil
 		return buf.Bytes(), nil
 	}
 }
