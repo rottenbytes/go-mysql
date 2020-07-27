@@ -92,14 +92,16 @@ func (c *Conn) ReadPacket() ([]byte, error) {
 
 func (c *Conn) ReadPacketReuseMem(dst []byte) ([]byte, error) {
 	// Here we use `sync.Pool` to avoid allocate/destroy buffers frequently.
-	buf := utils.BytesBufferGet()
-	defer utils.BytesBufferPut(buf)
+	//buf := utils.BytesBufferGet()
+	//defer utils.BytesBufferPut(buf)
+	var buf bytes.Buffer
 
-	if err := c.ReadPacketTo(buf); err != nil {
+	if err := c.ReadPacketTo(&buf); err != nil {
 		return nil, errors.Trace(err)
 	} else {
-		result := append(dst, buf.Bytes()...)
-		return result, nil
+		//result := append(dst, buf.Bytes()...)
+		//return result, nil
+		return buf.Bytes(), nil
 	}
 }
 
