@@ -322,6 +322,7 @@ func (c *Conn) readResultRows(result *Result, isBinary bool) (err error) {
 		}
 		data = result.RawPkg[rawPkgLen:]
 
+		fmt.Println("-----> in readResultRows 2")
 		// EOF Packet
 		if c.isEOFPacket(data) {
 			if c.capability&CLIENT_PROTOCOL_41 > 0 {
@@ -334,19 +335,23 @@ func (c *Conn) readResultRows(result *Result, isBinary bool) (err error) {
 			break
 		}
 
+		fmt.Println("-----> in readResultRows 3")
 		if data[0] == ERR_HEADER {
 			return c.handleErrorPacket(data)
 		}
 
+		fmt.Println("-----> in readResultRows 4")
 		result.RowDatas = append(result.RowDatas, data)
 	}
 
+	fmt.Println("-----> in readResultRows 5")
 	if cap(result.Values) < len(result.RowDatas) {
 		result.Values = make([][]FieldValue, len(result.RowDatas))
 	} else {
 		result.Values = result.Values[:len(result.RowDatas)]
 	}
 
+	fmt.Println("-----> in readResultRows 6")
 	for i := range result.Values {
 		result.Values[i], err = result.RowDatas[i].Parse(result.Fields, isBinary, result.Values[i])
 
@@ -355,5 +360,6 @@ func (c *Conn) readResultRows(result *Result, isBinary bool) (err error) {
 		}
 	}
 
+	fmt.Println("-----> in readResultRows 7")
 	return nil
 }
