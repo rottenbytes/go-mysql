@@ -6,6 +6,7 @@ import (
 	"crypto/x509"
 	"encoding/binary"
 	"encoding/pem"
+	"fmt"
 
 	"github.com/pingcap/errors"
 	. "github.com/siddontang/go-mysql/mysql"
