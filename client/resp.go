@@ -257,10 +257,15 @@ func (c *Conn) readResultColumns(result *Result) (err error) {
 	var i int = 0
 	var data []byte
 
+	fmt.Println("-----> in readResultColumns")
+
 	for {
 		rawPkgLen := len(result.RawPkg)
 		result.RawPkg, err = c.ReadPacketReuseMem(result.RawPkg)
 		if err != nil {
+
+		fmt.Println("-----> fail in readResultColumns")
+
 			return
 		}
 		data = result.RawPkg[rawPkgLen:]
@@ -298,10 +303,14 @@ func (c *Conn) readResultColumns(result *Result) (err error) {
 func (c *Conn) readResultRows(result *Result, isBinary bool) (err error) {
 	var data []byte
 
+	fmt.Println("-----> in readResultRows")
+
 	for {
 		rawPkgLen := len(result.RawPkg)
 		result.RawPkg, err = c.ReadPacketReuseMem(result.RawPkg)
+
 		if err != nil {
+			fmt.Println("-----> fail in readResultRows")
 			return
 		}
 		data = result.RawPkg[rawPkgLen:]
