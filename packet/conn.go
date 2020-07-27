@@ -101,6 +101,7 @@ func (c *Conn) ReadPacketReuseMem(dst []byte) ([]byte, error) {
 		fmt.Println("--> error in ReadPacketReuseMem")
 		return nil, errors.Trace(err)
 	} else {
+		fmt.Println("--> ReadPacketReuseMem: sending back data")
 		return buf.Bytes(), nil
 	}
 }
